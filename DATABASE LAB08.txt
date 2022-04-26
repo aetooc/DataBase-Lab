@@ -1,0 +1,110 @@
+Ex # 6.1
+
+UPDATE empfr
+    -> SET EMP_PHONE = '324-9652'
+    -> WHERE EMP_NUM = 100;
+Query OK, 1 row affected (0.081 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+DROP VIEW EMPFR;
+
+----------------------------------------------------------
+
+Ex # 6.2
+
+Create view EMP_DETAILS as
+    -> Select EMP_NUM, themepark.PARK_CODE, PARK_NAME, EMP_LNAME, EMP_FNAME, EMP_HIRE_DATE, EMP_DOB
+    -> From employee JOIN themepark on themepark.park_code=employee.park_code;
+Query OK, 0 rows affected (0.046 sec)
+
+DESCRIBE EMP_DETAILS;
+
+SELECT * FROM EMP_DETAILS;
+
+----------------------------------------------------------
+
+Ex # 6.3
+
+Select EMP_FNAME, EMP_LNAME, PARK_NAME
+    -> From EMP_DETAILS;
++-----------+------------+--------------+
+| EMP_FNAME | EMP_LNAME  | PARK_NAME    |
++-----------+------------+--------------+
+| Emma      | Calderdale | FairyLand    |
+| Marshel   | Ricardo    | PleasureLand |
+| Arif      | Arshad     | FairyLand    |
+| Anne      | Roberts    | PleasureLand |
+| Enrica    | Denver     | GoldTown     |
+| Mirrelle  | Namowa     | FairyLand    |
+| Gemma     | Smith      | GoldTown     |
++-----------+------------+--------------+
+7 rows in set (0.001 sec)
+----------------------------------------------------------
+
+Ex # 6.4
+CREATE VIEW TICKET_SALES AS 
+SELECT T.PARK_CODE , T.PARK_NAME , S.TRANSACTION_NO , MAX(SL.LINE_PRICE) , MIN(SL.LINE_PRICE) , AVG(SL.LINE_PRICE) 
+FROM SALES S JOIN THEMEPARK T ON T.PARK_CODE=S.PARK_CODE JOIN SALES_LINE SL ON SL.TRANSACTION_NO=S.TRANSACTION_NO 
+GROUP BY PARK_NAME;
+
+SELECT * FROM TICKET_SALES;
+
+
+Ex # 6.5
+
+SELECT DISTINCT(DATE_FORMAT(SALE_DATE, '%a-%d-%c-%y'))
+    -> FROM SALES;
++-----------------------------------------+
+| (DATE_FORMAT(SALE_DATE, '%a-%d-%c-%y')) |
++-----------------------------------------+
+| Fri-18-5-07                             |
++-----------------------------------------+
+1 row in set (0.001 sec)
+
+----------------------------------------------------------
+
+Ex # 6.6
+SELECT EMP_FNAME, EMP_LNAME, EMP_DOB, concat(date_format(EMP_DOB,'%m'),'01', SUBSTR(UPPER(emp_lname),1, 6)) as USER_ID from employee;
+
+Ex # 6.7
+
+SELECT EMP_FNAME, EMP_LNAME, EMP_DOB
+    -> FROM EMPLOYEE
+    -> WHERE DAYOFMONTH(EMP_DOB) = '14';
+
+
++-----------+-----------+------------+
+| EMP_FNAME | EMP_LNAME | EMP_DOB    |
++-----------+-----------+------------+
+| Arif      | Arshad    | 1969-11-14 |
+| Mirrelle  | Namowa    | 1990-03-14 |
++-----------+-----------+------------+
+2 rows in set (0.026 sec)
+
+----------------------------------------------------------
+
+Ex # 6.8
+
+SELECT EMP_FNAME, EMP_PHONE, concat(SUBSTR(EMP_PHONE, 1, 3),SUBSTR(LOWER(emp_fname), 1, 2)) as USER_PASSWORD
+    -> FROM EMPLOYEE;
++-----------+-----------+---------------+
+| EMP_FNAME | EMP_PHONE | USER_PASSWORD |
++-----------+-----------+---------------+
+| Emma      | 324-9652  | 324em         |
+| Marshel   | 324-4472  | 324ma         |
+| Arif      | 675-8993  | 675ar         |
+| Anne      | 898-3456  | 898an         |
+| Enrica    | 504-4434  | 504en         |
+| Mirrelle  | 890-3243  | 890mi         |
+| Gemma     | 324-7845  | 324ge         |
++-----------+-----------+---------------+
+7 rows in set (0.046 sec)
+
+----------------------------------------------------------
+
+CREATE VIEW EMPFR
+SELECT *
+FROM EMPLOYEE
+AS
+WHERE PARK_CODE = 'FR1001'
+WITH CHECK OPTION;

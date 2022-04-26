@@ -1,0 +1,83 @@
+Muhammad Awais
+p20-0107
+BS CS-A
+
+
+
+
+Question 1:
+MariaDB [company]> SELECT * FROM emp WHERE SALARY = (SELECT MAX(SALARY) FROM emp);
++-------+-------+-----------+------+------------+--------+------------+--------+
+| empno | ename | job       | mgr  | hiredate   | salary | commission | deptno |
++-------+-------+-----------+------+------------+--------+------------+--------+
+|  7839 | King  | President | NULL | 2021-07-31 |   6500 |       NULL |     10 |
++-------+-------+-----------+------+------------+--------+------------+--------+
+1 row in set (0.001 sec)
+
+Question 2:
+MariaDB [company]> select ename from emp where emp.deptno =(select dept.deptno from dept where dname = 'sales');
++--------+
+| ename  |
++--------+
+| Allen  |
+| Ward   |
+| Martin |
+| Blake  |
+| Turner |
+| James  |
++--------+
+6 rows in set (0.001 sec)
+
+Question 3:
+select ename from emp where emp.deptno =(select dept.deptno from dept where location = 'New York');
++--------+
+| ename  |
++--------+
+| Clark  |
+| King   |
+| Miller |
++--------+
+3 rows in set (0.001 sec)
+
+Question 4:
+MariaDB [company]> select count(*)from emp where deptno = (select deptno from dept where dname = 'sales');
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.001 sec)
+
+Question 5:
+MariaDB [company]> select ename from emp where salary > (select max(salary)from emp where deptno = 30);
++-------+
+| ename |
++-------+
+| Jones |
+| Scott |
+| King  |
+| Ford  |
++-------+
+4 rows in set (0.001 sec)
+
+
+Question 6:
+MariaDB [company]> select ename from emp where salary > (select min(salary)from emp where deptno = 30);
++--------+
+| ename  |
++--------+
+| Allen  |
+| Ward   |
+| Jones  |
+| Martin |
+| Blake  |
+| Clark  |
+| Scott  |
+| David  |
+| King   |
+| Turner |
+| Adams  |
+| Ford   |
+| Miller |
++--------+
+13 rows in set (0.001 sec)

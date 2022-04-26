@@ -1,0 +1,13 @@
+VarChar(5): ALI => ye 3 bits use kare ga and 2 bits ko free kar dega.
+		=> Length run time p decide hogi
+	
+
+Char(5): ALI => ye 5 bits he use kare ga, free nhi kare ga.
+	     => Is case mein searching easy ha
+	     => kuch k us ko pata ho k ALI k baad dosra name 5 bits k baad ha
+
+
+	     * ENUM Data Type
+             * NOT NULL ==> Required (MUST)
+             * NOT NULL na likha to optional ho jata ha
+             * INDEX searching ko fast kar raha ha
